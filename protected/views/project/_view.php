@@ -13,6 +13,10 @@
 	<?php echo CHtml::encode($data->name); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('type')); ?>:</b>
+	<?php echo CHtml::encode($data->type); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('rc_type')); ?>:</b>
 	<?php echo CHtml::encode($data->rc_type); ?>
 	<br />

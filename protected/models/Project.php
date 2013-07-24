@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'project':
  * @property integer $id
  * @property string $name
+ * @property string $type
  * @property string $rc_type
  * @property string $rc_url
  */
@@ -37,13 +38,13 @@ class Project extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, rc_type, rc_url', 'required'),
+			array('name, type, rc_type, rc_url', 'required'),
 			array('name', 'length', 'max'=>32),
-			array('rc_type', 'length', 'max'=>9),
+			array('type, rc_type', 'length', 'max'=>9),
 			array('rc_url', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, rc_type, rc_url', 'safe', 'on'=>'search'),
+			array('id, name, type, rc_type, rc_url', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +67,7 @@ class Project extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'name' => '项目名称',
+			'type' => '项目类型',
 			'rc_type' => '代码托管类型',
 			'rc_url' => '代码托管地址',
 		);
@@ -84,6 +86,7 @@ class Project extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
+		$criteria->compare('type',$this->type,true);
 		$criteria->compare('rc_type',$this->rc_type,true);
 		$criteria->compare('rc_url',$this->rc_url,true);
 
@@ -99,7 +102,7 @@ class Project extends CActiveRecord
 		$filepath = realpath($basepath.'/../bin/');
 		$ini = $filepath.'/project/test.ini';
 		$config = <<<EOD
-PROJECT_TYPE=ykapp
+PROJECT_TYPE={$this->type}
 
 PROJECT_RC={$this->rc_type}
 PROJECT_RC_URL={$this->rc_url}

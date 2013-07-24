@@ -22,6 +22,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'type'); ?>
+		<?php echo $form->textField($model,'type',array('size'=>9,'maxlength'=>9)); ?>
+		<?php echo $form->error($model,'type'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'rc_type'); ?>
 		<?php echo $form->textField($model,'rc_type',array('size'=>9,'maxlength'=>9)); ?>
 		<?php echo $form->error($model,'rc_type'); ?>
