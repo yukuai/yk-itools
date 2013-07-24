@@ -1,0 +1,53 @@
+#!/bin/bash
+
+PROJECT_NAME=$1
+PROJECT_BUILD_VER=$2
+DEPLOY_NAME=$3
+
+COD_BUILD=/tmp/cod/build
+PROJECT_BUILD_DIR=${COD_BUILD}/${PROJECT_NAME}-${PROJECT_BUILD_VER}
+
+source project/${PROJECT_NAME}.ini
+source deploy/${DEPLOY_NAME}.ini
+
+
+build() {
+    echo 'build'
+    mkdir -p ${PROJECT_BUILD_DIR}
+    echo svn export -r ${PROJECT_BUILD_VER} ${PROJECT_RC_URL} ${PROJECT_BUILD_DIR}
+    # svn export --force -r ${PROJECT_BUILD_VER} ${PROJECT_RC_URL} ${PROJECT_BUILD_DIR}
+    project-build ${PROJECT_BUILD_DIR}
+}
+
+project-build() {
+    [ -e $1/build ] && $1/build
+}
+
+deploy() {
+    ${PROJECT_TYPE}-${DEPLOY_TYPE} "$@"
+}
+
+call-rsync() {
+    # -auzq \
+    echo \
+        rsync \
+        -rtzvu \
+        --progress \
+        $1 \
+        $2
+
+    rsync \
+        -rtzvu \
+        --progress \
+        $1 \
+        $2
+}
+
+ykapp-rsync() {
+    echo ${DEPLOY_TYPE}
+    call-rsync ${PROJECT_BUILD_DIR}/ ${DEPLOY_TARGET}/
+}
+
+
+build
+deploy
