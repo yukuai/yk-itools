@@ -98,14 +98,17 @@ class Project extends CActiveRecord
 	protected function afterSave()
 	{
 		parent::afterSave();
+
 		$basepath = Yii::app()->getBasePath();
+		// echo Yii::getPathOfAlias('webroot');
 		$filepath = realpath($basepath.'/../bin/');
-		$ini = $filepath.'/project/test.ini';
+		$ini = $filepath."/project/{$this->name}.ini";
 		$config = <<<EOD
 PROJECT_TYPE={$this->type}
 
 PROJECT_RC={$this->rc_type}
 PROJECT_RC_URL={$this->rc_url}
+
 EOD;
 		file_put_contents($ini, $config);
 	}

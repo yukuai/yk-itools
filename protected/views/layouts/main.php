@@ -29,11 +29,22 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
+				array('label'=>'首页', 'url'=>array('/site/index')),
+				array('label'=>'项目', 'url'=>array('/project')),
+				array('label'=>'服务器', 'url'=>array('/server')),
+				/* array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')), */
+				/* array('label'=>'Contact', 'url'=>array('/site/contact')), */
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+			),
+		)); ?>
+	</div><!-- mainmenu -->
+	<div id="mainmenu">
+	<?php $this->widget('zii.widgets.CMenu',array(
+			'items'=>array(
+				array('label'=>'日志', 'url'=>array('/project/log')),
+				array('label'=>'版本', 'url'=>array('/project/version')),
+				array('label'=>'部署', 'url'=>array('/project/deploy')),
 			),
 		)); ?>
 	</div><!-- mainmenu -->
@@ -48,8 +59,7 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
+		愉快网研发中心<br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 

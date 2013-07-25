@@ -91,4 +91,19 @@ class Server extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	protected function afterSave()
+	{
+		parent::afterSave();
+
+		$basepath = Yii::app()->getBasePath();
+		$filepath = realpath($basepath.'/../bin/');
+		$ini = $filepath."/server/{$this->name}.ini";
+		$config = <<<EOD
+DEPLOY_TYPE={$this->deploy_type}
+DEPLOY_TARGET={$this->deploy_target}
+
+EOD;
+		file_put_contents($ini, $config);
+	}
 }

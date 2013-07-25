@@ -36,7 +36,7 @@ class ProjectController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete', 'deploy'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -141,6 +141,33 @@ class ProjectController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionDeploy()
+	{
+		$model = new DeployForm;
+		if(isset($_POST['DeployForm']))
+		{
+			// collects user input data
+			$model->attributes=$_POST['DeployForm'];
+			// validates user input and redirect to previous page if validated
+			if($model->validate()) {
+				echo "cod {$model->project} {$model->version} {$model->server}";
+			}
+			// $this->redirect(Yii::app()->user->returnUrl);
+		}
+		// displays the deploy form
+		$this->render('deploy', array('model'=>$model));
+	}
+
+	public function actionLog()
+	{
+		$this->render('log');
+	}
+
+	public function actionVersion()
+	{
+		$this->render('version');
 	}
 
 	/**
