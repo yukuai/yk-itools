@@ -46,6 +46,8 @@
 				array('label'=>'版本', 'url'=>array('/project/version')),
 				array('label'=>'部署', 'url'=>array('/project/deploy')),
 
+                array('label'=>Yii::t('app','Rights'), 'url'=>array('/rights')),
+
 array('url'=>Yii::app()->getModule('user')->loginUrl, 'label'=>Yii::app()->getModule('user')->t("Login"), 'visible'=>Yii::app()->user->isGuest),
 array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Register"), 'visible'=>Yii::app()->user->isGuest),
 array('url'=>Yii::app()->getModule('user')->profileUrl, 'label'=>Yii::app()->getModule('user')->t("Profile"), 'visible'=>!Yii::app()->user->isGuest),

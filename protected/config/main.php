@@ -8,7 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'项目部署',
-    'language' => 'zh_CN',
+    'language' => 'zh_cn',
 	// preloading 'log' component
 	'preload'=>array('log'),
 
