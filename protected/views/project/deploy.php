@@ -28,7 +28,7 @@ $this->breadcrumbs=array(
     <div class="row">
       <?php echo $form->label($model,'version'); ?>
       <?php echo $form->dropDownList($model,'version',
-      array('HEAD', '稳定版', '432')
+      array('HEAD', '稳定版', '432' => '432')
       ); ?>
     </div>
 

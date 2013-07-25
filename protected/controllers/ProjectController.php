@@ -152,7 +152,13 @@ class ProjectController extends Controller
 			$model->attributes=$_POST['DeployForm'];
 			// validates user input and redirect to previous page if validated
 			if($model->validate()) {
-				echo "cod {$model->project} {$model->version} {$model->server}";
+				$cli = "./cod {$model->project} {$model->version} {$model->server}";
+				$bin = Yii::getPathOfAlias('webroot').'/bin/';
+				chdir($bin);
+				exec($cli, $output, $ret);
+				print_r($output);
+				print_r($ret);
+				return $this->render('log', array('model'=>$model));
 			}
 			// $this->redirect(Yii::app()->user->returnUrl);
 		}
