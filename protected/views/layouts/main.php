@@ -29,29 +29,18 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'首页', 'url'=>array('/site/index')),
-				array('label'=>'项目', 'url'=>array('/project')),
-				array('label'=>'服务器', 'url'=>array('/server')),
-				/* array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')), */
-				/* array('label'=>'Contact', 'url'=>array('/site/contact')), */
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
-	</div><!-- mainmenu -->
-	<div id="mainmenu">
-	<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'日志', 'url'=>array('/project/log')),
+				array('label'=>'首页', 'url'=>array('/project/log')),
+				array('label'=>'项目', 'url'=>array('/project/index')),
+				array('label'=>'服务器', 'url'=>array('/server/index')),
 				array('label'=>'版本', 'url'=>array('/project/version')),
 				array('label'=>'部署', 'url'=>array('/project/deploy')),
 
-                array('label'=>Yii::t('app','Rights'), 'url'=>array('/rights')),
 
-array('url'=>Yii::app()->getModule('user')->loginUrl, 'label'=>Yii::app()->getModule('user')->t("Login"), 'visible'=>Yii::app()->user->isGuest),
-array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Register"), 'visible'=>Yii::app()->user->isGuest),
-array('url'=>Yii::app()->getModule('user')->profileUrl, 'label'=>Yii::app()->getModule('user')->t("Profile"), 'visible'=>!Yii::app()->user->isGuest),
-array('url'=>Yii::app()->getModule('user')->logoutUrl, 'label'=>Yii::app()->getModule('user')->t("Logout").' ('.Yii::app()->user->name.')', 'visible'=>!Yii::app()->user->isGuest),
+				array('url'=>Yii::app()->getModule('user')->loginUrl, 'label'=>Yii::app()->getModule('user')->t("Login"), 'visible'=>Yii::app()->user->isGuest),
+				array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Register"), 'visible'=>Yii::app()->user->isGuest),
+				array('url'=>Yii::app()->getModule('user')->profileUrl, 'label'=>Yii::app()->getModule('user')->t("Profile"), 'visible'=>!Yii::app()->user->isGuest),
+				array('url'=>Yii::app()->getModule('user')->logoutUrl, 'label'=>Yii::app()->getModule('user')->t("Logout").' ('.Yii::app()->user->name.')', 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>Yii::t('app','Rights'), 'url'=>array('/rights')),
 			),
 		)); ?>
 	</div><!-- mainmenu -->
