@@ -16,7 +16,7 @@ $this->breadcrumbs=array(
     <div class="row">
       <?php echo $form->label($model,'project'); ?>
       <?php echo $form->dropDownList($model,'project',
-      CHtml::listData(Project::model()->findAll(), 'name', 'name')); ?>
+      CHtml::listData(CodeRepository::model()->findAll(), 'name', 'name')); ?>
     </div>
 
     <div class="row">
@@ -28,7 +28,7 @@ $this->breadcrumbs=array(
     <div class="row">
       <?php echo $form->label($model,'version'); ?>
       <?php echo $form->dropDownList($model,'version',
-      array('HEAD', '稳定版', '432' => '432')
+      $versions
       ); ?>
     </div>
 

@@ -1,6 +1,6 @@
 <?php
 
-class ProjectController extends RController
+class DataController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -14,7 +14,6 @@ class ProjectController extends RController
 	public function filters()
 	{
 		return array(
-			'rights',
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
@@ -37,8 +36,8 @@ class ProjectController extends RController
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'deploy'),
-				'roles'=>array('admin'),
+				'actions'=>array('admin','delete'),
+				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -63,14 +62,14 @@ class ProjectController extends RController
 	 */
 	public function actionCreate()
 	{
-		$model=new Project;
+		$model=new CodeRepository;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Project']))
+		if(isset($_POST['CodeRepository']))
 		{
-			$model->attributes=$_POST['Project'];
+			$model->attributes=$_POST['CodeRepository'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -92,9 +91,9 @@ class ProjectController extends RController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Project']))
+		if(isset($_POST['CodeRepository']))
 		{
-			$model->attributes=$_POST['Project'];
+			$model->attributes=$_POST['CodeRepository'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -123,7 +122,7 @@ class ProjectController extends RController
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Project');
+		$dataProvider=new CActiveDataProvider('CodeRepository');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -134,66 +133,26 @@ class ProjectController extends RController
 	 */
 	public function actionAdmin()
 	{
-		$model=new Project('search');
+		$model=new CodeRepository('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Project']))
-			$model->attributes=$_GET['Project'];
+		if(isset($_GET['CodeRepository']))
+			$model->attributes=$_GET['CodeRepository'];
 
 		$this->render('admin',array(
 			'model'=>$model,
 		));
 	}
 
-	public function actionDeploy($id)
-	{
-		$cr = CodeRepository::model()->findByPk($id);
-		$head = $cr->rc_head;
-		$versions = array();
-		for ($i=0; $i<=10; $i++) {
-			$versions[] = $head - $i;
-		}
-
-		$model = new DeployForm;
-		if(isset($_POST['DeployForm']))
-		{
-			// collects user input data
-			$model->attributes=$_POST['DeployForm'];
-			// validates user input and redirect to previous page if validated
-			if($model->validate()) {
-				$cli = "./cod {$model->project} {$model->version} {$model->server}";
-				$bin = Yii::getPathOfAlias('webroot').'/bin/';
-				chdir($bin);
-				exec($cli, $output, $ret);
-				print_r($output);
-				print_r($ret);
-				return $this->render('log', array('model'=>$model));
-			}
-			// $this->redirect(Yii::app()->user->returnUrl);
-		}
-		// displays the deploy form
-		$this->render('deploy', array('model'=>$model, 'versions'=>$versions));
-	}
-
-	public function actionLog()
-	{
-		$this->render('log');
-	}
-
-	public function actionVersion()
-	{
-		$this->render('version');
-	}
-
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Project the loaded model
+	 * @return CodeRepository the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Project::model()->findByPk($id);
+		$model=CodeRepository::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -201,11 +160,11 @@ class ProjectController extends RController
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Project $model the model to be validated
+	 * @param CodeRepository $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='project-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='code-repository-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

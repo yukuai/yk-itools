@@ -1,25 +1,28 @@
 <?php
 
 /**
- * This is the model class for table "rc_log".
+ * This is the model class for table "code_repository".
  *
- * The followings are the available columns in table 'rc_log':
+ * The followings are the available columns in table 'code_repository':
  * @property integer $id
- * @property integer $cr_id
- * @property integer $rev
- * @property string $author
- * @property string $msg
- * @property integer $timestamp
+ * @property string $name
+ * @property string $type
+ * @property string $rc_type
+ * @property string $rc_url
+ * @property string $rc_username
+ * @property string $rc_password
+ * @property string $rc_head
+ * @property string $description
  *
  * The followings are the available model relations:
- * @property CodeRepository $cr
+ * @property RcLog[] $rcLogs
  */
-class RcLog extends CActiveRecord
+class CodeRepository extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return RcLog the static model class
+	 * @return CodeRepository the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -31,7 +34,7 @@ class RcLog extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'rc_log';
+		return 'code_repository';
 	}
 
 	/**
@@ -42,13 +45,14 @@ class RcLog extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cr_id, rev, author, timestamp', 'required'),
-			array('cr_id, rev, timestamp', 'numerical', 'integerOnly'=>true),
-			array('author', 'length', 'max'=>24),
-			array('msg', 'length', 'max'=>1024),
+			array('name, rc_url, rc_head', 'required'),
+			array('name, rc_username', 'length', 'max'=>32),
+			array('type, rc_type', 'length', 'max'=>9),
+			array('rc_url', 'length', 'max'=>128),
+			array('rc_password, rc_head, description', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, cr_id, rev, author, msg, timestamp', 'safe', 'on'=>'search'),
+			array('id, name, type, rc_type, rc_url, rc_username, rc_password, rc_head, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,7 +64,7 @@ class RcLog extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'cr' => array(self::BELONGS_TO, 'CodeRepository', 'cr_id'),
+			'rcLogs' => array(self::HAS_MANY, 'RcLog', 'cr_id'),
 		);
 	}
 
@@ -71,11 +75,14 @@ class RcLog extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'cr_id' => 'Cr',
-			'rev' => 'Rev',
-			'author' => 'Author',
-			'msg' => 'Msg',
-			'timestamp' => 'Timestamp',
+			'name' => 'Name',
+			'type' => 'Type',
+			'rc_type' => 'Rc Type',
+			'rc_url' => 'Rc Url',
+			'rc_username' => 'Rc Username',
+			'rc_password' => 'Rc Password',
+			'rc_head' => 'Rc Head',
+			'description' => 'Description',
 		);
 	}
 
@@ -91,11 +98,14 @@ class RcLog extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('cr_id',$this->cr_id);
-		$criteria->compare('rev',$this->rev);
-		$criteria->compare('author',$this->author,true);
-		$criteria->compare('msg',$this->msg,true);
-		$criteria->compare('timestamp',$this->timestamp);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('type',$this->type,true);
+		$criteria->compare('rc_type',$this->rc_type,true);
+		$criteria->compare('rc_url',$this->rc_url,true);
+		$criteria->compare('rc_username',$this->rc_username,true);
+		$criteria->compare('rc_password',$this->rc_password,true);
+		$criteria->compare('rc_head',$this->rc_head,true);
+		$criteria->compare('description',$this->description,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
