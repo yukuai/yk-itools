@@ -12,11 +12,16 @@ source server/${DEPLOY_NAME}.ini
 
 
 build() {
-    echo 'build'
-    mkdir -p ${PROJECT_BUILD_DIR}
-    echo svn export -r ${PROJECT_BUILD_VER} ${PROJECT_RC_URL} ${PROJECT_BUILD_DIR}
-    # svn export --force -r ${PROJECT_BUILD_VER} ${PROJECT_RC_URL} ${PROJECT_BUILD_DIR}
-    project-build ${PROJECT_BUILD_DIR}
+    if [ -d "${PROJECT_BUILD_DIR}" ]; then
+        echo 'build (ignore: build dir existed)'
+    else
+        echo 'build'
+        mkdir -p ${PROJECT_BUILD_DIR}
+
+        echo svn export -r ${PROJECT_BUILD_VER} ${PROJECT_RC_URL} ${PROJECT_BUILD_DIR}
+        svn export --force -r ${PROJECT_BUILD_VER} ${PROJECT_RC_URL} ${PROJECT_BUILD_DIR}
+        project-build ${PROJECT_BUILD_DIR}
+    fi
 }
 
 project-build() {

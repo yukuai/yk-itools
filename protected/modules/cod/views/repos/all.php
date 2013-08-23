@@ -7,20 +7,7 @@ $this->breadcrumbs=array(
 );
 
 $data=$dataProvider->getData();
-if(($n=count($data))>0)
-{
-    foreach($data as $item)
-    {
-        print_r($item->name);
-    }
-}
-else
-{
-}
-
 ?>
-
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
 
 <ul class="thumbnails">
   <?php

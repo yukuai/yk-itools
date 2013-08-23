@@ -4,7 +4,7 @@ class ReposController extends Controller
 {
 	public function actionIndex()
 	{
-		$this->actionAll();
+		$this->redirect(array('/cod/repos/all'));
 	}
 
 	/**
@@ -44,22 +44,13 @@ class ReposController extends Controller
 				$bin = Yii::getPathOfAlias('webroot').'/bin/';
 				chdir($bin);
 				exec($cli, $output, $ret);
-				echo $cli;
-				echo '<pre>';
-				echo implode('<br />',$output);
-				echo '</pre>';
-
 				echo $ret;
-				return;
-				// return $this->render('log', array('model'=>$model));
+				return $this->render('/deploy/result', array('cli'=>$cli, 'output'=>$output, 'ret'=>$ret));
 			}
 			// $this->redirect(Yii::app()->user->returnUrl);
 		}
-		else
-		{
-			$model->project = $cr->name;
-			$this->render('deploy', array('model'=>$model, 'versions'=>$versions));
-		}
+		$model->project = $cr->name;
+		$this->render('deploy', array('model'=>$model, 'versions'=>$versions));
 	}
 
 	public function actionStatus()

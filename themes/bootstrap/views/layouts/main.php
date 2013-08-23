@@ -19,16 +19,35 @@
         array(
             'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
-                array('label'=>'Home', 'url'=>array('/site/index')),
+                array('label'=>'首页', 'url'=>array('/site/index')),
                 array('label'=>'代码库', 'url'=>'#', 'items'=>array(
                     array('label'=>'列表', 'url'=>array('/cod/repos/all')),
-                    array('label'=>'发布', 'url'=>array('/cod/repos/deploy')),
                     '---',
                     array('label'=>'管理', 'url'=>array('/cod/data/repos')),
                 )),
-                array('label'=>'Contact', 'url'=>array('/site/contact')),
-                array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-                array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+
+            ),
+        ),
+
+        array(
+            'class'=>'bootstrap.widgets.TbMenu',
+            'htmlOptions'=>array('class'=>'pull-right'),
+            'items'=>array(
+                array('label'=>'登录', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+                array('label'=>'退出 ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+
+                array('label'=>'后台', 'url'=>'#', 'items'=>array(
+                    array('label'=>'用户', 'url'=>array('/user')),
+                    array('label'=>'Another action', 'url'=>'#'),
+                    array('label'=>'Something else here', 'url'=>'#'),
+                    '---',
+                    array('label'=>'Separated link', 'url'=>'#'),
+                )),
+
+                array('label'=>'调试', 'url'=>'#', 'items'=>array(
+                    array('label'=>'代码发布', 'url'=>array('/cod/repos/deploy')),
+                )),
+
             ),
         ),
     ),
