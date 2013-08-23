@@ -1,4 +1,4 @@
-http://yii1.dev.us/codeploy/index.php?r=cr/action/deploy&id=1
+* URL 列表
 
 |                          |                |
 |--------------------------+----------------|
@@ -6,10 +6,21 @@ http://yii1.dev.us/codeploy/index.php?r=cr/action/deploy&id=1
 | cod/repos/status?repos=2 |                |
 | cod/repos/deploy         |                |
 
+* Model: Code_Repository | 代码库
 
-cod/
-  repos/list
-  repos/server/1
-  repos/version/1
-  repos/deploy&rid=1&sid=2&version=320
-    server
+|             |                             |                                               |                |   |
+|-------------+-----------------------------+-----------------------------------------------+----------------+---|
+| * leader    | 项目负责人                  |                                               |                |   |
+| *           | 项目开发人员                |                                               | 自动从日志获取 |   |
+| * current   | 当前维护分支、版本          | trunk                                         |                |   |
+| * entry     | 网站入口                    | http://m.yukuai.com/                          |                |   |
+| description | 描述                        | 移动应用主页管理工具                          |                |   |
+| * status    | 状态                        | 开发、维护、停止                              |                |   |
+| id          |                             |                                               |                |   |
+| name        | 名称，由项目类型_项目名组成 | ykapp_mobile                                  |                |   |
+| rc_type     | 版本控制系统                | svn                                           |                |   |
+| rc_url      | SVN URL                     | http://118.145.11.238:28763/svn/ykapp_mobile/ |                |   |
+| rc_username |                             | luotao                                        |                |   |
+| rc_password |                             | xxxxxxxxx                                     |                |   |
+| rc_head     | 已保存的版本日志最新版本号  | 320                                           |                |   |
+|             |                             |                                               |                |   |

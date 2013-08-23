@@ -111,4 +111,27 @@ class CodeRepository extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	protected function afterSave()
+	{
+		parent::afterSave();
+		cod_cr2ini($this);
+	}
+}
+
+function cod_cr2ini($cr)
+{
+	$basepath = Yii::app()->getBasePath();
+	// echo Yii::getPathOfAlias('webroot');
+	$filepath = realpath($basepath.'/../bin/');
+	$ini = $filepath."/project/{$cr->name}.ini";
+	$config = <<<EOD
+PROJECT_TYPE={$cr->type}
+
+PROJECT_RC={$cr->rc_type}
+PROJECT_RC_URL={$cr->rc_url}
+
+EOD;
+	file_put_contents($ini, $config);
+
 }
