@@ -42,7 +42,11 @@ function cr_svn_get_head($url)
 
     $logs = svn_log($url, SVN_REVISION_HEAD);
 
-    return $logs[0]['rev'];
+	if (count($logs) <= 0) {
+		return -1;
+	} else {
+		return $logs[0]['rev'];
+	}
 }
 
 function cr_deploy($repos, $ver, $server)

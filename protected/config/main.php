@@ -129,7 +129,7 @@ return array(
 		*/
 
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=codeploy',
+			'connectionString' => 'mysql:host=localhost;dbname=yukuai_itools',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
