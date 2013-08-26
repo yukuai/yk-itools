@@ -6,14 +6,9 @@ $this->breadcrumbs=array(
 	'Result',
 );
 ?>
-<p>
-$ <?php echo $cli; ?>
-</p>
-
-<pre>
-<?php echo implode('<br />',$output); ?>
-</pre>
+<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
 
 <p>
-$ <?php echo $ret; ?>
+	You may change the content of this page by modifying
+	the file <tt><?php echo __FILE__; ?></tt>.
 </p>

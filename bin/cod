@@ -1,35 +1,77 @@
 #!/bin/bash
 
-PROJECT_NAME=$1
-PROJECT_BUILD_VER=$2
-DEPLOY_NAME=$3
+APP_ID=$1
+APP_BUILD_VER=$2
+DEPLOY_SERVER=$3
+
 
 COD_BUILD=/tmp/cod/build
-PROJECT_BUILD_DIR=${COD_BUILD}/${PROJECT_NAME}-${PROJECT_BUILD_VER}/
+APP_BUILD_DIR=${COD_BUILD}/${APP_ID}-${APP_BUILD_VER}
 
-source project/${PROJECT_NAME}.ini
-source server/${DEPLOY_NAME}.ini
 
+# 获取相关变量
+source app/${APP_ID}.ini
+source server/${DEPLOY_SERVER}.ini
+
+
+eval "DEPLOY_PATH=\${DEPLOY_$APP_TYPE}"
+APP_NAME=$(ls $APP_BUILD_DIR/app)
+
+if [ -z "$APP_DEPLOY_NAME" ]; then
+    APP_DEPLOY_NAME=$APP_NAME
+fi
+
+# 打印相关变量
+t_var() {
+    local val=$(eval echo "\$$1")
+    printf "| %18s | %-62s |\n" $1 $val
+}
+debug_var() {
+    for key in APP_ID APP_NAME APP_TYPE APP_BUILD_VER \
+        DEPLOY_SERVER DEPLOY_TYPE APP_BUILD_DIR DEPLOY_PATH APP_DEPLOY_NAME
+    do
+        t_var $key
+    done
+}
 
 build() {
-    if [ -d "${PROJECT_BUILD_DIR}" ]; then
+    if [ -d "${APP_BUILD_DIR}" ]; then
         echo 'build (ignore: build dir existed)'
     else
         echo 'build'
-        mkdir -p ${PROJECT_BUILD_DIR}
+        mkdir -p ${APP_BUILD_DIR}
 
-        echo svn export -r ${PROJECT_BUILD_VER} ${PROJECT_RC_URL} ${PROJECT_BUILD_DIR}
-        svn export --force -r ${PROJECT_BUILD_VER} ${PROJECT_RC_URL} ${PROJECT_BUILD_DIR}
-        project-build ${PROJECT_BUILD_DIR}
+        echo svn export -r ${APP_BUILD_VER} ${APP_RC_URL} ${APP_BUILD_DIR}/
+        svn export --force -r ${APP_BUILD_VER} ${APP_RC_URL} ${APP_BUILD_DIR}/
+
+        app-build ${APP_BUILD_DIR}
+    fi
+
+    app-build ${APP_BUILD_DIR}
+}
+
+app-build() {
+    [ -e $1/build ] && $1/build
+
+    # 根据项目代码类型，调用相应的 构建命令
+    APP_TYPE_BUILD=${APP_TYPE}-build
+    # 先后先判断函数 $APP_TYPE_BUILD 是否存在
+    if declare -F $APP_TYPE_BUILD > /dev/null; then
+        $APP_TYPE_BUILD $1
     fi
 }
 
-project-build() {
-    [ -e $1/build ] && $1/build
+YKAPP-build() {
+    if [ x"$APP_NAME" != x"$APP_DEPLOY_NAME" ];then
+        mv $1/app/$APP_NAME $1/app/$APP_DEPLOY_NAME
+        mv $1/htdocs/$APP_NAME $1/htdocs/$APP_DEPLOY_NAME
+        mv $1/template/$APP_NAME $1/template/$APP_DEPLOY_NAME
+    fi
 }
 
+
 deploy() {
-    ${PROJECT_TYPE}-${DEPLOY_TYPE} "$@"
+    ${APP_TYPE}-${DEPLOY_TYPE} "$@"
 }
 
 call-rsync() {
@@ -41,6 +83,8 @@ call-rsync() {
         $1 \
         $2
 
+    return 0
+
     rsync \
         -rtzvu \
         --progress \
@@ -48,11 +92,11 @@ call-rsync() {
         $2
 }
 
-ykapp-rsync() {
-    echo ${DEPLOY_TYPE}
-    call-rsync ${PROJECT_BUILD_DIR} ${DEPLOY_TARGET}
+YKAPP-rsync() {
+    call-rsync ${APP_BUILD_DIR}/ ${DEPLOY_PATH}
 }
 
+# debug_var
 
 build
 deploy
