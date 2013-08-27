@@ -24,3 +24,10 @@
 | rc_password |                             | xxxxxxxxx                                     |                |   |
 | rc_head     | 已保存的版本日志最新版本号  | 320                                           |                |   |
 |             |                             |                                               |                |   |
+
+
+M index.php date, yii path
+M config/main.php mysql连接
+
+
+灰度发布

@@ -124,13 +124,15 @@ function cod_cr2ini($cr)
 	$basepath = Yii::app()->getBasePath();
 	// echo Yii::getPathOfAlias('webroot');
 	$filepath = realpath($basepath.'/../bin/');
-	$ini = $filepath."/project/{$cr->name}.ini";
+	$ini = $filepath."/app/{$cr->name}.ini";
+	// APP_TYPE={$cr->type}
 	$config = <<<EOD
-PROJECT_TYPE={$cr->type}
+APP_TYPE=YKAPP
 
-PROJECT_RC={$cr->rc_type}
-PROJECT_RC_URL={$cr->rc_url}
+APP_RC={$cr->rc_type}
+APP_RC_URL={$cr->rc_url}
 
+APP_DEPLOY_NAME={$cr->deploy_name}
 EOD;
 	file_put_contents($ini, $config);
 
