@@ -8,7 +8,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
     'theme'=>'bootstrap', // requires you to copy the theme under your themes directory
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'项目部署',
+	'name'=>'yk-itools',
     'language' => 'zh_cn',
 	// preloading 'log' component
 	'preload'=>array(
