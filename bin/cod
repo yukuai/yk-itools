@@ -5,6 +5,8 @@ APP_BUILD_VER=$2
 DEPLOY_SERVER=$3
 
 
+#COD_BUILD=/app/source/runtime
+#COD_BUILD=/tmp/cod
 COD_BUILD=/tmp/cod/build
 APP_BUILD_DIR=${COD_BUILD}/${APP_ID}-${APP_BUILD_VER}
 
@@ -15,11 +17,6 @@ source server/${DEPLOY_SERVER}.ini
 
 
 eval "DEPLOY_PATH=\${DEPLOY_$APP_TYPE}"
-APP_NAME=$(ls $APP_BUILD_DIR/app)
-
-if [ -z "$APP_DEPLOY_NAME" ]; then
-    APP_DEPLOY_NAME=$APP_NAME
-fi
 
 # 打印相关变量
 t_var() {
@@ -44,10 +41,16 @@ build() {
         echo svn export -r ${APP_BUILD_VER} ${APP_RC_URL} ${APP_BUILD_DIR}/
         svn export --force -r ${APP_BUILD_VER} ${APP_RC_URL} ${APP_BUILD_DIR}/
 
+
+        APP_NAME=$(ls $APP_BUILD_DIR/app)
+
+        if [ -z "$APP_DEPLOY_NAME" ]; then
+            APP_DEPLOY_NAME=$APP_NAME
+        fi
+
+
         app-build ${APP_BUILD_DIR}
     fi
-
-    app-build ${APP_BUILD_DIR}
 }
 
 app-build() {
@@ -83,7 +86,7 @@ call-rsync() {
         $1 \
         $2
 
-    return 0
+    # return 0
 
     rsync \
         -rtzvu \
