@@ -20,12 +20,7 @@
             'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
                 array('label'=>'首页', 'url'=>array('/site/index')),
-                array('label'=>'代码库', 'url'=>'#', 'items'=>array(
-                    array('label'=>'列表', 'url'=>array('/cod/repos/all')),
-                    '---',
-                    array('label'=>'管理', 'url'=>array('/cod/data/repos')),
-                )),
-
+                array('label'=>'发布', 'url'=>array('/cod/repos/all')),
             ),
         ),
 
@@ -38,10 +33,9 @@
 
                 array('label'=>'后台', 'url'=>'#', 'items'=>array(
                     array('label'=>'用户', 'url'=>array('/user')),
-                    array('label'=>'Another action', 'url'=>'#'),
-                    array('label'=>'Something else here', 'url'=>'#'),
                     '---',
-                    array('label'=>'Separated link', 'url'=>'#'),
+                    array('label'=>'应用', 'url'=>array('/cod/data/repos')),
+                    array('label'=>'服务器', 'url'=>array('/server')),
                 )),
 
                 array('label'=>'调试', 'url'=>'#', 'items'=>array(

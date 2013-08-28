@@ -2,8 +2,8 @@
 /* @var $this ReposController */
 
 $this->breadcrumbs=array(
-    'Repos'=>array('/cod/repos'),
-    'All',
+    '发布'=>array('/cod/repos/all'),
+    '选择应用',
 );
 
 $data=$dataProvider->getData();

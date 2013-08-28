@@ -2,11 +2,10 @@
 /* @var $this ReposController */
 
 $this->breadcrumbs=array(
-	'Repos'=>array('/cod/repos'),
-	'Deploy',
+    '发布'=>array('/cod/repos/all'),
+    $app->name,
 );
 ?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(

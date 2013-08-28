@@ -2,8 +2,9 @@
 /* @var $this DeployController */
 
 $this->breadcrumbs=array(
-	'Deploy'=>array('/cod/deploy'),
-	'Result',
+    '发布'=>array('/cod/repos/all'),
+    $app->name=>array('/cod/repos/all', 'id'=>$app->id),
+	'结果',
 );
 ?>
 <p>$ <?php echo $cli; ?></p>

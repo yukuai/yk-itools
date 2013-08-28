@@ -20,12 +20,12 @@ class ReposController extends Controller
 
 	public function actionDeploy($id = 1)
 	{
-		$cr = CodeRepository::model()->findByPk($id);
+		$app = CodeRepository::model()->findByPk($id);
 
 
 
-		$head = cr_svn_get_head($cr->rc_url);
-		// $cr->rc_head;
+		$head = cr_svn_get_head($app->rc_url);
+		// $app->rc_head;
 		$versions = array();
 		for ($i=0; $i<=10; $i++) {
 			$ver = $head - $i;
@@ -45,12 +45,12 @@ class ReposController extends Controller
 				chdir($bin);
 				exec($cli, $output, $ret);
 				echo $ret;
-				return $this->render('/deploy/result', array('cli'=>$cli, 'output'=>$output, 'ret'=>$ret));
+				return $this->render('/deploy/result', array('app'=>$app, 'cli'=>$cli, 'output'=>$output, 'ret'=>$ret));
 			}
 			// $this->redirect(Yii::app()->user->returnUrl);
 		}
-		$model->project = $cr->name;
-		$this->render('deploy', array('model'=>$model, 'versions'=>$versions));
+		$model->project = $app->name;
+		$this->render('deploy', array('model'=>$model, 'versions'=>$versions, 'app'=>$app));
 	}
 
 	public function actionStatus()
