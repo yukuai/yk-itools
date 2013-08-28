@@ -1,3 +1,7 @@
++ 代码库 repo
++ 应用 app Application
++ 应用服务器 as - AS(Application Server)
+
 * URL 列表
 
 |                          |                |
@@ -6,24 +10,58 @@
 | cod/repos/status?repos=2 |                |
 | cod/repos/deploy         |                |
 
-* Model: Code_Repository | 代码库
+* Model: App | 代码库
 
-|             |                             |                                               |                |   |
-|-------------+-----------------------------+-----------------------------------------------+----------------+---|
-| * leader    | 项目负责人                  |                                               |                |   |
-| *           | 项目开发人员                |                                               | 自动从日志获取 |   |
-| * current   | 当前维护分支、版本          | trunk                                         |                |   |
-| * entry     | 网站入口                    | http://m.yukuai.com/                          |                |   |
-| description | 描述                        | 移动应用主页管理工具                          |                |   |
-| * status    | 状态                        | 开发、维护、停止                              |                |   |
-| id          |                             |                                               |                |   |
-| name        | 名称，由项目类型_项目名组成 | ykapp_mobile                                  |                |   |
-| rc_type     | 版本控制系统                | svn                                           |                |   |
-| rc_url      | SVN URL                     | http://118.145.11.238:28763/svn/ykapp_mobile/ |                |   |
-| rc_username |                             | luotao                                        |                |   |
-| rc_password |                             | xxxxxxxxx                                     |                |   |
-| rc_head     | 已保存的版本日志最新版本号  | 320                                           |                |   |
-|             |                             |                                               |                |   |
+| id                |                  | 1                         |                                                        |
+|-------------------+------------------+---------------------------+--------------------------------------------------------|
+| name              | 名称             | ykapp_analysis            | 由项目类型_项目名组成                                  |
+| * status          | 状态             | 开发、维护、停止          |                                                        |
+| description       | 描述             | 移动应用主页管理工具      |                                                        |
+|-------------------+------------------+---------------------------+--------------------------------------------------------|
+| * leader          | 项目负责人       |                           |                                                        |
+| *                 | 项目开发人员     |                           | 自动从日志获取                                         |
+| * entry           | 网站入口         | http://a.yukuai.com/      |                                                        |
+|-------------------+------------------+---------------------------+--------------------------------------------------------|
+| ! repo            | 代码库外键       | 1                         |                                                        |
+| repo_path         | 在代码库中的路径 | /ykapp_analysis/trunk/src | APP_RC_URL>APP_REPO_URL=REPO_URL+APP_REPO_PATH         |
+| * cache_repo_head |                  |                           |                                                        |
+|-------------------+------------------+---------------------------+--------------------------------------------------------|
+| deploy_mode       | 发布模式         | ykapp, yii                | APP_TYPE>APP_DEPLOY_MODE, DEPLOY_YKAPP, 自动从名字获取 |
+| deploy_path       | 发布路径         | analysis2                 | APP_DEPLOY_NAME>APP_DEPLOY_PATH                        |
+
+
+* Model: Repo | 代码库定义
+
+| id       |      | 1                               |                      |
+|----------+------+---------------------------------+----------------------|
+| name     | 名字 | svn.yukuai.com                  |                      |
+| type     | 类型 | svn                             | APP_RC>APP_REPO_TYPE |
+| url      |      | http://118.145.11.238:28763/svn |                      |
+| username |      | luotao                          |                      |
+| password |      | xxxxxxxxx                       |                      |
+
+
+* Model: AS | 应用服务器
+
+| id          |          | 1                                                |                            |
+|-------------+----------+--------------------------------------------------+----------------------------|
+| name        | 名字     | svn.yukuai.com                                   |                            |
+| update_mode | 更新模式 | rsync                                            | DEPLOY_TYPE>AS_UPDATE_MODE |
+| url         | 地址     | phpdev@192.168.101.106::webapp_php_s3BDh9C4gNt3b | DEPLOY_TARGET>AS_URL       |
+|             |          |                                                  | DEPLOY_YKAPP>AS_URL_YKAPP  |
+
+
+APP_TYPE=YKAPP
+
+APP_RC=svn
+APP_RC_URL=http://118.145.11.238:28763/svn/ykapp_analysis/trunk/src
+
+APP_DEPLOY_NAME=analysis2
+
+DEPLOY_TYPE=rsync
+DEPLOY_TARGET=phpdev@192.168.101.106::web_appall_s3BDh9C4gNt3b
+
+DEPLOY_YKAPP=${DEPLOY_TARGET}/php/
 
 
 M index.php date, yii path
