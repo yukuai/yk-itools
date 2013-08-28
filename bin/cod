@@ -5,7 +5,7 @@ APP_BUILD_VER=$2
 DEPLOY_SERVER=$3
 
 
-COD_BUILD=/tmp/yk-itools
+COD_BUILD=/data/stark/yk-itools/protected/runtime/build
 APP_BUILD_DIR=${COD_BUILD}/${APP_ID}-${APP_BUILD_VER}
 
 
