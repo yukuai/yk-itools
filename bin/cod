@@ -1,13 +1,14 @@
 #!/bin/bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-P="$( cd $DIR/../ && pwd )"
+SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 APP_ID=$1
 APP_BUILD_VER=$2
 APP_SERVER=$3
 
 
-COD_BUILD=/data/stark/yk-itools/protected/runtime/build
+BUILD_PATH=${SCRIPT_PATH}/../protected/runtime/build
+COD_BUILD="$( cd ${BUILD_PATH} && pwd )"
+# APP 构建编译目标位置
 APP_BUILD_DIR=${COD_BUILD}/${APP_ID}-${APP_BUILD_VER}
 
 
@@ -39,7 +40,8 @@ build() {
         mkdir -p ${APP_BUILD_DIR}
 
         echo svn export -r ${APP_BUILD_VER} ${APP_REPO_URL} ${APP_BUILD_DIR}/
-        svn export --force -r ${APP_BUILD_VER} ${APP_REPO_URL} ${APP_BUILD_DIR}/
+        svn export --force -r ${APP_BUILD_VER} ${APP_REPO_URL} ${APP_BUILD_DIR}/ \
+            --username ${APP_REPO_USER} --password ${APP_REPO_PASS}
 
 
         # APP_NAME=$(ls $APP_BUILD_DIR/app)

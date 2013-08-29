@@ -1,6 +1,27 @@
 <?php
-// uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
+/*
+  clientdb.example.com for Production
+  clientdb-perf.example.com for Performance Testing
+  clientdb-qa.example.com for QA
+  clientdb-dev.example.com for Development
+*/
+define( 'I_CONFIG', dirname(__FILE__) );
+// $_SERVER['SERVER_NAME'];
+
+define( 'I_LOCAL_SERVER',   file_exists( I_CONFIG . '/local-config.php' ) );
+define( 'I_DEV_SERVER',     file_exists( I_CONFIG . '/dev-config.php' ) );
+define( 'I_STAGING_SERVER', file_exists( I_CONFIG . '/staging-config.php' ) );
+
+if ( I_LOCAL_SERVER )
+    require I_CONFIG . '/local-config.php';
+elseif ( I_DEV_SERVER )
+    require I_CONFIG . '/dev-config.php';
+elseif ( I_STAGING_SERVER )
+    require I_CONFIG . '/staging-config.php';
+else
+    require I_CONFIG . '/production-config.php';
+
+// define path alias
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 
 // This is the main Web application configuration. Any writable
@@ -129,10 +150,10 @@ return array(
 		*/
 
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=yukuai_itools',
+			'connectionString' => I_DB_CONN,
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => I_DB_USER,
+			'password' => I_DB_PASS,
 			'charset' => 'utf8',
 		),
 
