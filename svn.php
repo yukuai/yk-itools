@@ -16,7 +16,17 @@ function cr_svn_get_head() {
     print_r($logs[0]['rev']);
 }
 
-cr_svn_get_head();
+function cr_svn_get_ykapp_name() {
+    cr_svn_auth();
+
+    $logs = svn_ls('http://118.145.11.238:28763/svn/ykapp_analysis/trunk/src/app');
+
+    print_r($logs);
+}
+
+//cr_svn_get_head();
+cr_svn_get_ykapp_name();
+die();
 /* foreach( $logs as $v ) */
 /* { */
 /*     print_r($v['rev']); */

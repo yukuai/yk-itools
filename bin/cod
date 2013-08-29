@@ -1,8 +1,10 @@
 #!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+P="$( cd $DIR/../ && pwd )"
 
 APP_ID=$1
 APP_BUILD_VER=$2
-DEPLOY_SERVER=$3
+APP_SERVER=$3
 
 
 COD_BUILD=/data/stark/yk-itools/protected/runtime/build
@@ -11,10 +13,10 @@ APP_BUILD_DIR=${COD_BUILD}/${APP_ID}-${APP_BUILD_VER}
 
 # 获取相关变量
 source app/${APP_ID}.ini
-source server/${DEPLOY_SERVER}.ini
+source server/${APP_SERVER}.ini
 
 
-eval "DEPLOY_PATH=\${DEPLOY_$APP_TYPE}"
+eval "AS_DEPLOY_ROOT=\${AS_URL_$APP_DEPLOY_MODE}"
 
 # 打印相关变量
 t_var() {
@@ -22,8 +24,8 @@ t_var() {
     printf "| %18s | %-62s |\n" $1 $val
 }
 debug_var() {
-    for key in APP_ID APP_NAME APP_TYPE APP_BUILD_VER \
-        DEPLOY_SERVER DEPLOY_TYPE APP_BUILD_DIR DEPLOY_PATH APP_DEPLOY_NAME
+    for key in APP_ID APP_NAME APP_DEPLOY_MODE APP_BUILD_VER \
+        APP_SERVER AS_UPDATE_MODE APP_BUILD_DIR AS_DEPLOY_ROOT APP_DEPLOY_PATH
     do
         t_var $key
     done
@@ -36,14 +38,14 @@ build() {
         echo 'build'
         mkdir -p ${APP_BUILD_DIR}
 
-        echo svn export -r ${APP_BUILD_VER} ${APP_RC_URL} ${APP_BUILD_DIR}/
-        svn export --force -r ${APP_BUILD_VER} ${APP_RC_URL} ${APP_BUILD_DIR}/
+        echo svn export -r ${APP_BUILD_VER} ${APP_REPO_URL} ${APP_BUILD_DIR}/
+        svn export --force -r ${APP_BUILD_VER} ${APP_REPO_URL} ${APP_BUILD_DIR}/
 
 
-        APP_NAME=$(ls $APP_BUILD_DIR/app)
+        # APP_NAME=$(ls $APP_BUILD_DIR/app)
 
-        if [ -z "$APP_DEPLOY_NAME" ]; then
-            APP_DEPLOY_NAME=$APP_NAME
+        if [ -z "$APP_DEPLOY_PATH" ]; then
+            APP_DEPLOY_PATH=$APP_NAME
         fi
 
 
@@ -55,24 +57,24 @@ app-build() {
     [ -e $1/build ] && $1/build
 
     # 根据项目代码类型，调用相应的 构建命令
-    APP_TYPE_BUILD=${APP_TYPE}-build
-    # 先后先判断函数 $APP_TYPE_BUILD 是否存在
-    if declare -F $APP_TYPE_BUILD > /dev/null; then
-        $APP_TYPE_BUILD $1
+    MODE_BUILD=${APP_DEPLOY_MODE}-build
+    # 先后先判断函数 $MODE_BUILD 是否存在
+    if declare -F $MODE_BUILD > /dev/null; then
+        $MODE_BUILD $1
     fi
 }
 
 YKAPP-build() {
-    if [ x"$APP_NAME" != x"$APP_DEPLOY_NAME" ];then
-        mv $1/app/$APP_NAME $1/app/$APP_DEPLOY_NAME
-        mv $1/htdocs/$APP_NAME $1/htdocs/$APP_DEPLOY_NAME
-        mv $1/template/$APP_NAME $1/template/$APP_DEPLOY_NAME
+    if [ x"$APP_NAME" != x"$APP_DEPLOY_PATH" ];then
+        mv $1/app/$APP_NAME $1/app/$APP_DEPLOY_PATH
+        mv $1/htdocs/$APP_NAME $1/htdocs/$APP_DEPLOY_PATH
+        mv $1/template/$APP_NAME $1/template/$APP_DEPLOY_PATH
     fi
 }
 
 
 deploy() {
-    ${APP_TYPE}-${DEPLOY_TYPE} "$@"
+    ${APP_DEPLOY_MODE}-${AS_UPDATE_MODE} "$@"
 }
 
 call-rsync() {
@@ -94,10 +96,10 @@ call-rsync() {
 }
 
 YKAPP-rsync() {
-    call-rsync ${APP_BUILD_DIR}/ ${DEPLOY_PATH}
+    call-rsync ${APP_BUILD_DIR}/ ${AS_DEPLOY_ROOT}
 }
 
-# debug_var
+debug_var
 
 build
 deploy

@@ -12,7 +12,7 @@ class ReposController extends Controller
 	 */
 	public function actionAll()
 	{
-		$dataProvider=new CActiveDataProvider('CodeRepository');
+		$dataProvider=new CActiveDataProvider('Application');
 		$this->render('all',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -20,11 +20,11 @@ class ReposController extends Controller
 
 	public function actionDeploy($id = 1)
 	{
-		$app = CodeRepository::model()->findByPk($id);
+		$app = Application::model()->findByPk($id);
 
 
-
-		$head = cr_svn_get_head($app->rc_url);
+		$app_ru = 'http://118.145.11.238:28763/svn'.$app->repo_path;
+		$head = cr_svn_get_head($app_ru);
 		// $app->rc_head;
 		$versions = array();
 		for ($i=0; $i<=10; $i++) {

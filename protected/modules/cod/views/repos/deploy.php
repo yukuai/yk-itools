@@ -19,10 +19,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <?php echo $form->errorSummary($model); ?>
 
 <?php echo $form->dropDownListRow($model,'project',
-								  CHtml::listData(CodeRepository::model()->findAll(), 'name', 'name')); ?>
+								  CHtml::listData(Application::model()->findAll(), 'name', 'name')); ?>
 
 <?php echo $form->dropDownListRow($model,'server',
-								  CHtml::listData(Server::model()->findAll(), 'name', 'name')); ?>
+								  CHtml::listData(ApplicationServer::model()->findAll(), 'name', 'name')); ?>
 
 <?php echo $form->dropDownListRow($model,'version',$versions); ?>
 

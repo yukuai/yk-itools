@@ -34,8 +34,8 @@
                 array('label'=>'后台', 'url'=>'#', 'items'=>array(
                     array('label'=>'用户', 'url'=>array('/user')),
                     '---',
-                    array('label'=>'应用', 'url'=>array('/cod/data/repos')),
-                    array('label'=>'服务器', 'url'=>array('/server')),
+                    array('label'=>'应用', 'url'=>array('/data/app/admin')),
+                    array('label'=>'服务器', 'url'=>array('/data/as/admin')),
                 )),
 
                 array('label'=>'调试', 'url'=>'#', 'items'=>array(
