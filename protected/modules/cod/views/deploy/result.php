@@ -3,7 +3,7 @@
 
 $this->breadcrumbs=array(
     '发布'=>array('/cod/repos/all'),
-    $app->name=>array('/cod/repos/all', 'id'=>$app->id),
+    $app->description=>array('/cod/repos/all', 'id'=>$app->id),
 	'结果',
 );
 ?>

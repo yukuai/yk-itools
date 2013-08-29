@@ -126,8 +126,10 @@ function cod_app2ini($app)
 	$filepath = realpath($basepath.'/../bin/');
 	$ini = $filepath."/app/{$app->name}.ini";
 
-	$app_dm = strtoupper(explode('_', $app->name, 2)[0]);
-	$app_n  = strtolower(explode('_', $app->name, 2)[1]);
+	$s = explode('_', $app->name, 2);
+
+	$app_dm = strtoupper($s[0]);
+	$app_n  = strtolower($s[1]);
 	$app_rt = 'svn';
 	$app_ru = 'http://118.145.11.238:28763/svn'.$app->repo_path;
 	$app_dp = $app->deploy_path;
