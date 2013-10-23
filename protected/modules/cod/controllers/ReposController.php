@@ -40,11 +40,16 @@ class ReposController extends Controller
 			$model->attributes=$_POST['DeployForm'];
 			// validates user input and redirect to previous page if validated
 			if($model->validate()) {
-				$cli = "./cod {$model->project} {$model->version} {$model->server}";
+				$cli = './cod';
+				if ($model->forceRebuild == '1') {
+					$cli .= ' -f';
+				}
+				$cli .= " {$model->project} {$model->version} {$model->server}";
+
 				$bin = Yii::getPathOfAlias('webroot').'/bin/';
 				chdir($bin);
 				exec($cli, $output, $ret);
-				echo $ret;
+
 				return $this->render('/deploy/result', array('app'=>$app, 'cli'=>$cli, 'output'=>$output, 'ret'=>$ret));
 			}
 			// $this->redirect(Yii::app()->user->returnUrl);

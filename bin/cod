@@ -1,6 +1,13 @@
 #!/bin/bash
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+if [ x"$1" == x"-f" ]; then
+    FORCE_REBUILD=T
+    shift
+else
+    FORCE_REBUILD=F
+fi
+
 APP_ID=$1
 APP_BUILD_VER=$2
 APP_SERVER=$3
@@ -26,14 +33,15 @@ t_var() {
 }
 debug_var() {
     for key in APP_ID APP_NAME APP_DEPLOY_MODE APP_BUILD_VER \
-        APP_SERVER AS_UPDATE_MODE APP_BUILD_DIR AS_DEPLOY_ROOT APP_DEPLOY_PATH
+        APP_SERVER AS_UPDATE_MODE APP_BUILD_DIR AS_DEPLOY_ROOT APP_DEPLOY_PATH \
+        FORCE_REBUILD
     do
         t_var $key
     done
 }
 
 build() {
-    if [ -d "${APP_BUILD_DIR}" ]; then
+    if [ -d "${APP_BUILD_DIR}" -a x"$FORCE_REBUILD" == x"F" ]; then
         echo 'build (ignore: build dir existed)'
     else
         echo 'build'

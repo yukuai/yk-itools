@@ -28,6 +28,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $form->passwordFieldRow($model, 'password', array()); ?>
 
+<?php echo $form->checkboxRow($model, 'forceRebuild'); ?>
+
 </fieldset>
 
 <div class="form-actions">

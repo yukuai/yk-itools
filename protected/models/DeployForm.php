@@ -6,6 +6,8 @@ class DeployForm extends CFormModel
 	public $version;
 	public $password;
 
+	public $forceRebuild;
+
 	private $_identity;
 
 	/**
@@ -17,7 +19,7 @@ class DeployForm extends CFormModel
 	{
 		return array(
 			// username and password are required
-			array('project, server, version, password', 'required'),
+			array('project, server, version, password, forceRebuild', 'required'),
 
 			// password needs to be authenticated
 			array('password', 'authenticate'),
@@ -30,6 +32,7 @@ class DeployForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
+			'project' => '项目',
 			// 'rememberMe'=>'Remember me next time',
 		);
 	}
