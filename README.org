@@ -13,3 +13,20 @@
 
 1. yii-bootstrap
    http://www.cniska.net/yii-bootstrap/
+
+* bin/cod
+
+** 用法
+./cod [-f] app_id app_version app_server
+
+参数说明：
++ -f: 禁用缓存。默认启用缓存，即对每一个版本只构建一次。
+  使用场景：当项目内含外部 SVN 库时，可能因无法重新构建而同步失败。这时需用 -f
+
+示例：
+./cod ykapp_erb 341 yk106
+
+./cod -f ykapp_erb 341 yk106
+
+临时文件夹：
+protected/runtime/build/
