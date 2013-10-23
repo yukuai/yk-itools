@@ -32,8 +32,11 @@ class DeployForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'project' => '项目',
-			// 'rememberMe'=>'Remember me next time',
+			'project'  => '项目',
+			'version'  => '版本',
+			'server'   => '部署到',
+			'password' => '密码',
+			'forceRebuild'  => '禁用缓存',
 		);
 	}
 
@@ -48,7 +51,7 @@ class DeployForm extends CFormModel
 			$username = Yii::app()->user->name;
 			$this->_identity=new UserIdentity($username,$this->password);
 			if(!$this->_identity->authenticate())
-				$this->addError('password','Incorrect username or password.');
+				$this->addError('password','密码错误。');
 		}
 	}
 

@@ -21,10 +21,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <?php echo $form->dropDownListRow($model,'project',
 								  CHtml::listData(Application::model()->findAll(), 'name', 'name')); ?>
 
-<?php echo $form->dropDownListRow($model,'server',
-								  CHtml::listData(ApplicationServer::model()->findAll(), 'name', 'name')); ?>
-
 <?php echo $form->dropDownListRow($model,'version',$versions); ?>
+
+<?php echo $form->dropDownListRow($model,'server',
+CHtml::listData(ApplicationServer::model()->findAll(), 'name', 'name')); ?>
 
 <?php echo $form->passwordFieldRow($model, 'password', array()); ?>
 
