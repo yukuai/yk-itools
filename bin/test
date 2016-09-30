@@ -1,3 +1,3 @@
 #!/bin/bash
 # ./cod ykapp yxt 432 rsync yuhai@192.168.0.121::web_appall_s3BDh9C4gNt3b/php2
-./cod yxt 432 zd-php
+./cod -f ykapp_yxt 432 yk106

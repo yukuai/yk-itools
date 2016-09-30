@@ -111,5 +111,5 @@ YKAPP-rsync() {
 
 debug_var
 
-build
-deploy
+# build
+# deploy

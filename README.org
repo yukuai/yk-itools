@@ -1,3 +1,6 @@
+愉快网工具集：
+1. 使用 SVN 部署项目代码到测试服务器
+
 * INSTALL
 
 1. Fatal error: Call to undefined function svn_auth_set_parameter() in ..?
